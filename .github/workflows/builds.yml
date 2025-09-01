@@ -33,6 +33,32 @@ jobs:
           call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" x64
           call build %${{ matrix.target }}% %${{ matrix.compiler }}% %${{ matrix.mode }}% || exit /b 1
 
+  build-ubuntu:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        target:
+          - raddbg
+          - radlink
+          - radbin
+        compiler:
+          - gcc
+          - clang
+        mode:
+          - debug
+          - release
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential clang
+      - name: build (ubuntu)
+        run: |
+          ./build.sh ${{ matrix.target }} ${{ matrix.compiler }} ${{ matrix.mode }}
+
   run-torture:
     runs-on: windows-2022
     steps:
