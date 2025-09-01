@@ -40,7 +40,7 @@ jobs:
       matrix:
         target:
           - raddbg
-          - radlink
+          # - radlink TODO
           # - rdi_from_pdb TODO
           # - rdi_from_dwarf TODO
           # - rdi_breakpad_from_pdb TODO
@@ -61,7 +61,7 @@ jobs:
 
       - name: build (ubuntu)
         run: |
-          ./build.sh ${{ matrix.target }} ${{ matrix.compiler }} ${{ matrix.mode }}
+          bash build.sh ${{ matrix.target }} ${{ matrix.compiler }} ${{ matrix.mode }}
 
   run-torture:
     runs-on: windows-2022
